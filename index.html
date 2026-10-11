@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mappe Magiche Studio — Crea mappe concettuali</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar">
+  <div id="logo">
+    <span id="logo-icon">🦉</span>
+      <span id="logo-text">Mappe <b>Magiche</b> Studio</span>
+  </div>
+  <label id="font-control" for="map-font">
+    <span>Font mappa</span>
+    <select id="map-font" aria-label="Carattere di tutta la mappa">
+      <optgroup label="Puliti e moderni">
+        <option value="Nunito Sans" selected>Nunito Sans</option>
+        <option value="Inter">Inter</option>
+        <option value="Open Sans">Open Sans</option>
+        <option value="Lato">Lato</option>
+        <option value="Source Sans 3">Source Sans 3</option>
+        <option value="Noto Sans">Noto Sans</option>
+        <option value="Fira Sans">Fira Sans</option>
+        <option value="IBM Plex Sans">IBM Plex Sans</option>
+        <option value="Roboto">Roboto</option>
+        <option value="Ubuntu Sans">Ubuntu Sans</option>
+      </optgroup>
+      <optgroup label="Da provare per la leggibilità">
+        <option value="Atkinson Hyperlegible Next">Atkinson Hyperlegible Next</option>
+        <option value="Lexend">Lexend</option>
+        <option value="OpenDyslexic">OpenDyslexic</option>
+      </optgroup>
+      <optgroup label="Serif e monospazio">
+        <option value="Merriweather">Merriweather</option>
+        <option value="Source Serif 4">Source Serif 4</option>
+        <option value="JetBrains Mono">JetBrains Mono</option>
+      </optgroup>
+    </select>
+  </label>
+  <div id="topbar-actions">
+    <button id="btn-save" class="tb-btn" title="Salva mappa (Ctrl+S)">💾 Salva</button>
+    <button id="btn-export" class="tb-btn" title="Esporta come file JSON">⬇️ Esporta</button>
+    <button id="btn-import" class="tb-btn" title="Importa file JSON">⬆️ Importa</button>
+    <button id="btn-png" class="tb-btn" title="Esporta come immagine PNG">🖼️ PNG</button>
+    <button id="btn-clear" class="tb-btn danger" title="Cancella tutto">🗑️</button>
+  </div>
+</header>
+
+<div id="main">
+  <!-- PALETTA STRUMENTI -->
+  <aside id="palette">
+    <h3>🧰 Strumenti</h3>
+    <div class="pal-section">Forme</div>
+    <button class="pal-btn" data-add="circle"><span class="pal-ico">🟣</span>Cerchio</button>
+    <button class="pal-btn" data-add="rect"><span class="pal-ico">🟦</span>Quadro</button>
+    <button class="pal-btn" data-add="diamond"><span class="pal-ico">🔶</span>Rombo</button>
+    <button class="pal-btn" data-add="cloud"><span class="pal-ico">☁️</span>Nuvola</button>
+    <div class="pal-section">Contenuti</div>
+    <button class="pal-btn" data-add="text"><span class="pal-ico">✏️</span>Testo</button>
+    <button class="pal-btn" data-add="note"><span class="pal-ico">📝</span>Nota</button>
+    <button class="pal-btn" data-add="image"><span class="pal-ico">🖼️</span>Immagine</button>
+    <button class="pal-btn" data-add="mascot"><span class="pal-ico">🦊</span>Mascotte</button>
+    <div class="pal-hint">Trascina una forma sulla lavagna. Trascina un pallino blu: gli agganci diventano visibili. Rilascia su una forma per collegarla o nel vuoto per lasciare il filo sospeso. Clic destro su una forma o una freccia per le opzioni; doppio clic su una punta per scollegarla. 🔗</div>
+  </aside>
+
+  <!-- LAVAGNA -->
+  <div id="board-wrap">
+    <svg id="board" role="application" aria-label="Lavagna per creare mappe concettuali">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#5b6ee1"/>
+        </marker>
+        <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.6" fill="#d8ddff"/>
+        </pattern>
+      </defs>
+      <rect id="bg" width="100%" height="100%" fill="url(#dots)"/>
+      <g id="viewport">
+        <g id="links-layer"></g>
+        <g id="nodes-layer"></g>
+        <g id="link-handles-layer"></g>
+        <path id="temp-link" fill="none" stroke="#5b6ee1" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)" style="display:none"/>
+      </g>
+    </svg>
+
+    <div id="selection-tools" aria-label="Azioni sulla forma selezionata">
+      <button id="btn-edit-selected" class="tb-btn" type="button">✏️ Modifica</button>
+      <label class="node-font-control" for="node-font">
+        <span>Font forma</span>
+        <select id="node-font" aria-label="Carattere della forma selezionata">
+          <optgroup label="Puliti e moderni">
+            <option value="Nunito Sans">Nunito Sans</option><option value="Inter">Inter</option>
+            <option value="Open Sans">Open Sans</option><option value="Lato">Lato</option>
+            <option value="Source Sans 3">Source Sans 3</option><option value="Noto Sans">Noto Sans</option>
+            <option value="Fira Sans">Fira Sans</option><option value="IBM Plex Sans">IBM Plex Sans</option>
+            <option value="Roboto">Roboto</option><option value="Ubuntu Sans">Ubuntu Sans</option>
+          </optgroup>
+          <optgroup label="Da provare per la leggibilità">
+            <option value="Atkinson Hyperlegible Next">Atkinson Hyperlegible Next</option>
+            <option value="Lexend">Lexend</option><option value="OpenDyslexic">OpenDyslexic</option>
+          </optgroup>
+          <optgroup label="Serif e monospazio">
+            <option value="Merriweather">Merriweather</option><option value="Source Serif 4">Source Serif 4</option>
+            <option value="JetBrains Mono">JetBrains Mono</option>
+          </optgroup>
+        </select>
+      </label>
+      <label class="format-control" for="node-font-size" title="Dimensione del testo">
+        <span>Dimensione</span>
+        <select id="node-font-size" aria-label="Dimensione del testo in punti">
+          <option value="">Auto</option>
+        </select>
+      </label>
+      <div class="format-buttons" role="group" aria-label="Stile del testo">
+        <button id="node-bold" class="format-toggle" type="button" aria-label="Grassetto" aria-pressed="false" title="Grassetto"><b>B</b></button>
+        <button id="node-italic" class="format-toggle" type="button" aria-label="Corsivo" aria-pressed="false" title="Corsivo"><i>I</i></button>
+        <button id="node-underline" class="format-toggle" type="button" aria-label="Sottolineato" aria-pressed="false" title="Sottolineato"><u>U</u></button>
+      </div>
+      <label class="format-control format-color-control" for="node-text-color" title="Colore del testo">
+        <span>Colore</span>
+        <input id="node-text-color" type="color" value="#17243d" aria-label="Colore del testo">
+      </label>
+      <label class="format-control format-align-control" for="node-text-align" title="Allineamento del testo">
+        <span>Allinea</span>
+        <select id="node-text-align" aria-label="Allineamento del testo">
+          <option value="center">Centro</option><option value="left">Sinistra</option><option value="right">Destra</option>
+        </select>
+      </label>
+      <label class="format-control shape-size-control" for="node-size-preset">
+        <span>Forma</span>
+        <select id="node-size-preset" aria-label="Dimensione della forma selezionata">
+          <option value="small">Piccola</option>
+          <option value="medium">Media</option>
+          <option value="large">Grande</option>
+          <option value="custom">Personalizzata…</option>
+        </select>
+      </label>
+      <button id="btn-custom-size" class="tb-btn" type="button">↔ Dimensioni</button>
+      <button id="btn-delete-selected" class="tb-btn danger" type="button">🗑️ Elimina</button>
+    </div>
+
+    <div id="node-context-menu" role="menu" aria-label="Opzioni forma">
+      <button type="button" role="menuitem" data-action="edit">✏️ Modifica testo o immagine</button>
+      <button type="button" role="menuitem" data-action="duplicate">📄 Duplica</button>
+      <div class="context-separator"></div>
+      <div class="context-heading">Dimensione rapida</div>
+      <button type="button" role="menuitem" data-action="size" data-size="small">Piccola</button>
+      <button type="button" role="menuitem" data-action="size" data-size="medium">Media</button>
+      <button type="button" role="menuitem" data-action="size" data-size="large">Grande</button>
+      <button type="button" role="menuitem" data-action="custom-size">↔ Dimensioni personalizzate…</button>
+      <div class="context-separator"></div>
+      <button type="button" role="menuitem" class="context-danger" data-action="delete">🗑️ Elimina</button>
+    </div>
+    <div id="link-context-menu" role="menu" aria-label="Opzioni collegamento">
+      <div class="context-heading">Opzioni freccia</div>
+      <button type="button" role="menuitem" data-action="link-direction-both">↔ Rendi bidirezionale</button>
+      <button type="button" role="menuitem" data-action="link-reverse">↕ Inverti direzione</button>
+      <div class="context-separator"></div>
+      <button type="button" role="menuitem" class="context-danger" data-action="link-delete">🗑️ Elimina freccia</button>
+    </div>
+
+    <!-- MASCOTTE GUIDA -->
+    <div id="guido">
+      <div id="guido-bubble">Ciao! Sono <b>Maia la Volpe</b> 🦊<br>Trascina una forma dalla palette e inizia la tua mappa!</div>
+      <div id="guido-char"></div>
+    </div>
+
+    <!-- ZOOM -->
+    <div id="zoomctl">
+      <button id="zoom-out">−</button>
+      <span id="zoom-val">100%</span>
+      <button id="zoom-in">+</button>
+      <button id="zoom-fit">🏠</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-size" class="modal">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="size-title">
+    <h3 id="size-title">↔ Dimensioni della forma</h3>
+    <p class="modal-hint">Imposta la larghezza e l’altezza in pixel.</p>
+    <div class="dimensions-grid">
+      <label for="node-width">Larghezza
+        <input id="node-width" type="number" min="90" max="800" step="10">
+      </label>
+      <label for="node-height">Altezza
+        <input id="node-height" type="number" min="70" max="600" step="10">
+      </label>
+    </div>
+    <div class="modal-actions">
+      <span style="flex:1"></span>
+      <button id="size-cancel" class="tb-btn" type="button">Annulla</button>
+      <button id="size-ok" class="tb-btn primary" type="button">Applica ✔</button>
+    </div>
+  </div>
+</div>
+
+<!-- DIALOG MODIFICARS TESTO -->
+<div id="modal-text" class="modal">
+  <div class="modal-box">
+    <h3>✏️ Modifica testo</h3>
+    <textarea id="text-input" rows="4" placeholder="Scrivi qui il concetto..."></textarea>
+    <div class="color-row" id="text-colors"></div>
+    <div class="modal-actions">
+      <button id="btn-delete-node" class="tb-btn danger">🗑️ Elimina</button>
+      <span style="flex:1"></span>
+      <button id="text-cancel" class="tb-btn">Annulla</button>
+      <button id="text-ok" class="tb-btn primary">OK ✔</button>
+    </div>
+  </div>
+</div>
+
+<!-- DIALOG IMMAGINI -->
+<div id="modal-image" class="modal">
+  <div class="modal-box">
+    <h3>🖼️ Inserisci immagine</h3>
+    <p class="modal-hint">Incolla un URL di immagine da internet, oppure cerca su Wikimedia (immagini libere):</p>
+    <input id="img-url" type="url" placeholder="https://...">
+    <input id="img-caption" type="text" placeholder="Didascalia (facoltativa)" style="margin-top:8px">
+    <div id="img-search-row">
+      <input id="img-search" type="text" placeholder="Cerca immagine... es. vulcano">
+      <button id="btn-img-search" class="tb-btn primary">🔍 Cerca</button>
+    </div>
+    <div id="img-results"></div>
+    <div class="modal-actions">
+      <span style="flex:1"></span>
+      <button id="img-cancel" class="tb-btn">Annulla</button>
+      <button id="img-ok" class="tb-btn primary">Usa questa ✔</button>
+    </div>
+  </div>
+</div>
+
+<!-- DIALOG MASCOTTE -->
+<div id="modal-mascot" class="modal">
+  <div class="modal-box">
+    <h3>🎭 Scegli la mascotte</h3>
+    <div id="mascot-picker"></div>
+    <p class="modal-hint">Scrivi cosa deve spiegare:</p>
+    <textarea id="mascot-text" rows="3" placeholder="Esempio: La fotosintesi avviene nelle foglie! 🌱"></textarea>
+    <div class="modal-actions">
+      <span style="flex:1"></span>
+      <button id="mascot-cancel" class="tb-btn">Annulla</button>
+      <button id="mascot-ok" class="tb-btn primary">Aggiungi ✔</button>
+    </div>
+  </div>
+</div>
+
+<input id="file-import" type="file" accept="application/json" hidden>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

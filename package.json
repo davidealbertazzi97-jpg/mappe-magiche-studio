@@ -3,10 +3,10 @@
   "productName": "Mappe Magiche Studio",
   "version": "1.0.0",
   "description": "Applicazione desktop locale per creare mappe concettuali illustrate.",
+  "license": "0BSD",
   "desktopName": "mappe-magiche-studio",
   "main": "main.cjs",
   "author": "AI Swarm Solutions",
-  "private": true,
   "scripts": {
     "start": "electron .",
     "build:linux": "electron-builder --linux AppImage",
@@ -30,7 +30,8 @@
       "icon.svg",
       "fonts/**/*",
       "build/icons/**/*",
-      "README.md"
+      "README.md",
+      "LICENSE"
     ],
     "linux": {
       "target": [

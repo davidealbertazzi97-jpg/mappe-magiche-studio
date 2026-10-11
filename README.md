@@ -84,7 +84,7 @@ Il comando genera l’installer NSIS in `dist/`. Le immagini delle macchine virt
 
 ## Licenza
 
-La licenza del codice dell’app verrà aggiunta prima della pubblicazione pubblica del repository. Le licenze dei font restano quelle elencate in `fonts/licenses/`.
+Il codice originale dell’app è distribuito con licenza [0BSD](LICENSE), una licenza permissiva senza obbligo di attribuzione o copyleft. I font inclusi sono componenti di terze parti: restano distribuiti secondo le rispettive licenze e note di copyright conservate in `fonts/licenses/`.
 
 ---
 
@@ -174,4 +174,4 @@ This generates the NSIS installer in `dist/`. Virtual machine images and other t
 
 ## License
 
-The application source license will be added before the repository is made public. Font licenses remain listed in `fonts/licenses/`.
+The original application source code is distributed under the permissive [0BSD license](LICENSE), which has no attribution or copyleft requirement. Bundled fonts are third-party components and remain under their respective licenses and copyright notices in `fonts/licenses/`.

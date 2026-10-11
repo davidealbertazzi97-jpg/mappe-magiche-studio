@@ -13,7 +13,7 @@ APP_URI="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv
 
 mkdir -p "${APP_INSTALL_DIR}" "${APP_DIR_DESKTOP}" "${APP_ICON_DIR}"
 mkdir -p "${APP_INSTALL_DIR}/fonts"
-for file in index.html style.css app.js README.md icon.svg; do
+for file in index.html style.css app.js README.md LICENSE icon.svg; do
   install -m 0644 "${APP_DIR}/${file}" "${APP_INSTALL_DIR}/${file}"
 done
 cp -a "${APP_DIR}/fonts/." "${APP_INSTALL_DIR}/fonts/"

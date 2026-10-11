@@ -16,6 +16,9 @@
     "electron": "44.7.0",
     "electron-builder": "26.15.3"
   },
+  "overrides": {
+    "@electron/get": "5.1.0"
+  },
   "build": {
     "appId": "it.mappe.magiche.studio",
     "productName": "Mappe Magiche Studio",

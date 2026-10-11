@@ -1,7 +1,7 @@
 {
   "name": "mappe-magiche-studio",
   "productName": "Mappe Magiche Studio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Applicazione desktop locale per creare mappe concettuali illustrate.",
   "license": "0BSD",
   "desktopName": "mappe-magiche-studio",

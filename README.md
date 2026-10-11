@@ -57,7 +57,7 @@ Scarica `Mappe-Magiche-Studio-Setup-*.exe` dalla sezione **Releases**, avvialo e
 
 ## Dati e privacy
 
-Mappe e testi vengono conservati localmente nel profilo del browser o dell’app desktop. Non vengono inviati a un server dell’app. La ricerca immagini usa Wikimedia Commons; il caricamento di un’immagine web contatta l’indirizzo scelto dall’utente.
+Mappe e testi vengono conservati localmente nel profilo del browser o dell’app desktop. Non vengono inviati a un server dell’app. La ricerca immagini usa Wikimedia Commons; il caricamento di un’immagine web contatta l’indirizzo scelto dall’utente. Prima di caricare immagini esterne presenti in una mappa importata o ripristinata, l’app chiede il consenso e indica i siti coinvolti. Se rifiuti, rimuove dalla mappa gli indirizzi esterni senza contattarli.
 
 ## Caratteri e licenze di terze parti
 
@@ -147,7 +147,7 @@ Download `Mappe-Magiche-Studio-Setup-*.exe` from **Releases**, run it, and follo
 
 ## Data and privacy
 
-Maps and text are stored locally in the browser or desktop app profile. They are not sent to an app server. Image search uses Wikimedia Commons; loading a web image contacts the address selected by the user.
+Maps and text are stored locally in the browser or desktop app profile. They are not sent to an app server. Image search uses Wikimedia Commons; loading a web image contacts the address selected by the user. Before loading external images from an imported or restored map, the app asks for consent and lists the hosts involved. If you decline, it removes the external image URLs without contacting them.
 
 ## Fonts and third-party licenses
 

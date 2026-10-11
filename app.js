@@ -64,6 +64,27 @@
     return '';
   }
 
+  function confirmRemoteImages(nodes) {
+    const remoteNodes = nodes.filter((node) => /^https?:\/\//i.test(node.imageUrl));
+    if (!remoteNodes.length) return 0;
+
+    const hosts = [...new Set(remoteNodes.map((node) => {
+      try { return new URL(node.imageUrl).host; } catch (_) { return ''; }
+    }).filter(Boolean))];
+    const hostList = hosts.slice(0, 5).join(', ');
+    const moreHosts = hosts.length > 5 ? ` e altri ${hosts.length - 5}` : '';
+    const message = [
+      `Questa mappa contiene ${remoteNodes.length} ${remoteNodes.length === 1 ? 'immagine esterna' : 'immagini esterne'}.`,
+      hosts.length ? `Siti coinvolti: ${hostList}${moreHosts}.` : '',
+      'Se le carichi, questi siti possono vedere il tuo indirizzo di rete e quando apri la mappa. Il contenuto della mappa non viene inviato.',
+      'Vuoi caricare le immagini esterne? Se scegli No, gli indirizzi esterni verranno rimossi dalla mappa.',
+    ].filter(Boolean).join('\n\n');
+
+    if (window.confirm(message)) return 0;
+    remoteNodes.forEach((node) => { node.imageUrl = ''; });
+    return remoteNodes.length;
+  }
+
   let textMeasureContext;
   function textWidth(value, fontSize, fontFamily, bold = false, italic = false) {
     try {
@@ -591,13 +612,14 @@
   function restore() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return false;
+      if (!saved) return 0;
       const data = normalizeData(JSON.parse(saved));
+      const removedRemoteImages = confirmRemoteImages(data.nodes);
       Object.assign(state, data);
-      return true;
+      return removedRemoteImages;
     } catch (error) {
       console.warn('Salvataggio locale non leggibile:', error);
-      return false;
+      return 0;
     }
   }
 
@@ -1219,6 +1241,7 @@
     reader.onload = () => {
       try {
         const data = normalizeData(JSON.parse(String(reader.result)));
+        const removedRemoteImages = confirmRemoteImages(data.nodes);
         state.nodes = data.nodes; state.links = data.links;
         state.fontFamily = data.fontFamily;
         state.x = data.x; state.y = data.y; state.scale = data.scale;
@@ -1226,7 +1249,9 @@
         $('map-font').value = state.fontFamily;
         $('map-font').style.fontFamily = `"${state.fontFamily}", sans-serif`;
         render(); saveNow(false);
-        toast('Mappa importata!');
+        toast(removedRemoteImages
+          ? `Mappa importata; rimoss${removedRemoteImages === 1 ? 'a 1 immagine' : `e ${removedRemoteImages} immagini`} estern${removedRemoteImages === 1 ? 'a' : 'e'}.`
+          : 'Mappa importata!');
       } catch (error) {
         toast(error.message || 'Il file non è un JSON valido.');
       } finally { $('file-import').value = ''; }
@@ -1554,13 +1579,17 @@
     $('guido-char').setAttribute('aria-label', 'Maia la Volpe');
     populateFontSizeOptions();
     bindEvents();
-    restore();
+    const removedRemoteImages = restore();
     $('map-font').value = FONT_FAMILIES.has(state.fontFamily) ? state.fontFamily : DEFAULT_FONT;
     $('map-font').style.fontFamily = `"${$('map-font').value}", sans-serif`;
     document.querySelectorAll('#map-font option, #node-font option').forEach((option) => {
       option.style.fontFamily = `"${option.value}", sans-serif`;
     });
     refreshSize();
+    if (removedRemoteImages) {
+      saveNow(false);
+      toast(`Rimoss${removedRemoteImages === 1 ? 'a 1 immagine' : `e ${removedRemoteImages} immagini`} estern${removedRemoteImages === 1 ? 'a' : 'e'} dal salvataggio locale.`);
+    }
     if (state.nodes.length) $('guido-bubble').innerHTML = 'Bentornato! Tasto destro su una forma per modificarla e ridimensionarla; doppio clic per aprire subito l’editor. 🦊';
     if ('ResizeObserver' in window) new ResizeObserver(refreshSize).observe($('board-wrap'));
     else window.addEventListener('resize', refreshSize);

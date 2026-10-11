@@ -3,6 +3,7 @@
   "productName": "Mappe Magiche Studio",
   "version": "1.0.0",
   "description": "Applicazione desktop locale per creare mappe concettuali illustrate.",
+  "desktopName": "mappe-magiche-studio",
   "main": "main.cjs",
   "author": "AI Swarm Solutions",
   "private": true,
@@ -37,6 +38,7 @@
       ],
       "category": "Education",
       "icon": "build/icons",
+      "syncDesktopName": true,
       "artifactName": "Mappe-Magiche-Studio-${version}-${arch}.${ext}"
     },
     "win": {

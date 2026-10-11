@@ -46,6 +46,15 @@ Scarica `Mappe-Magiche-Studio-Setup-*.exe` dalla sezione **Releases**, avvialo e
 - Usa i comandi di zoom per ingrandire, ridurre o adattare la mappa alla lavagna.
 - La mappa si salva automaticamente. **Esporta** crea un file JSON trasferibile; **Importa** lo riapre; **PNG** scarica un’immagine della mappa.
 
+## Tasti rapidi
+
+- `Ctrl+S` / `⌘S`: salva la mappa.
+- `Canc` / `Backspace`: elimina la forma o il collegamento selezionato.
+- `Invio`: modifica la forma selezionata.
+- Clic destro: apre le opzioni dell’elemento.
+- `+` / `-`: ingrandisce o riduce la lavagna; `0`: adatta la mappa.
+- `Esc`: chiude la finestra aperta.
+
 ## Dati e privacy
 
 Mappe e testi vengono conservati localmente nel profilo del browser o dell’app desktop. Non vengono inviati a un server dell’app. La ricerca immagini usa Wikimedia Commons; il caricamento di un’immagine web contatta l’indirizzo scelto dall’utente.
@@ -126,6 +135,15 @@ Download `Mappe-Magiche-Studio-Setup-*.exe` from **Releases**, run it, and follo
 - Right-click an arrow to delete it, make it two-way, or reverse its direction.
 - Use the zoom controls to zoom in, zoom out, or fit the map to the board.
 - Maps autosave. **Export** creates a portable JSON file; **Import** opens it again; **PNG** downloads an image of the map.
+
+## Keyboard shortcuts
+
+- `Ctrl+S` / `⌘S`: save the map.
+- `Delete` / `Backspace`: delete the selected shape or connection.
+- `Enter`: edit the selected shape.
+- Right-click: open the item's options.
+- `+` / `-`: zoom in or out; `0`: fit the map to the board.
+- `Esc`: close the open dialog.
 
 ## Data and privacy
 
